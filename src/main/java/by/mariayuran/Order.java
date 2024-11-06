@@ -7,7 +7,7 @@ import java.util.List;
 public class Order {
 
     private int orderId;
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
     private double totalPrice;
     LocalDateTime openingTimestamp;
     LocalDateTime closingTimestamp;
@@ -48,7 +48,6 @@ public class Order {
     }
 
     public void addBook(Book book) {
-        books = new ArrayList<>();
         if (this.getStatus() == OrderStatus.OPEN) {
             books.add(book);
             totalPrice += book.getPrice();
@@ -78,5 +77,4 @@ public class Order {
         }
         return sb.toString();
     }
-
 }

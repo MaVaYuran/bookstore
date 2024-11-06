@@ -3,10 +3,11 @@ package by.mariayuran;
 import java.util.*;
 
 public class BookStore {
-    private List<Order> orders;
+    private final List<Order> orders;
     private final List<Book> storeBooks;
 
-    public BookStore() {
+    public BookStore(List<Order> orders) {
+        this.orders = orders;
         this.storeBooks = storeLibrary();
         System.out.println(storeBooks);
     }
@@ -17,7 +18,6 @@ public class BookStore {
 
 
     public Order createOrder() {
-        orders = new ArrayList<>();
         Order newOrder = new Order(orders.size() + 1);
         createOrderList(newOrder);
         orders.add(newOrder);
@@ -27,15 +27,17 @@ public class BookStore {
 
     public void cancelOrder(int orderId) {
         Order order = findOrder(orderId);
-        if (order != null)
+        if (order != null) {
             order.makeOrderCancelled();
+        }
     }
 
 
     public void completeOrder(int orderId) {
         Order order = findOrder(orderId);
-        if (order != null)
+        if (order != null) {
             order.makeOrderCompleted();
+        }
     }
 
     public Book getAnyBook(List<Book> books) {
@@ -52,13 +54,6 @@ public class BookStore {
         return null;
     }
 
-    private void createOrderList(Order newOrder) {
-        Scanner scanner = new Scanner(System.in);
-        int orderSize = scanner.nextInt();
-        for (int i = 0; i < orderSize; i++) {
-            newOrder.addBook(getAnyBook(storeBooks));
-        }
-    }
 
     public void listSortedOrders(int page, int pageSize, String sortBy) {
         List<Order> sortedOrders = new ArrayList<>(orders);
@@ -78,6 +73,14 @@ public class BookStore {
 
         for (int i = startIndex; i < endIndex; i++) {
             System.out.println(sortedOrders.get(i));
+        }
+    }
+
+    private void createOrderList(Order newOrder) {
+        Scanner scanner = new Scanner(System.in);
+        int orderSize = scanner.nextInt();
+        for (int i = 0; i < orderSize; i++) {
+            newOrder.addBook(getAnyBook(storeBooks));
         }
     }
 
