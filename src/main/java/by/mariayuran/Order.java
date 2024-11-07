@@ -1,5 +1,6 @@
 package by.mariayuran;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +10,8 @@ public class Order {
     private int orderId;
     private List<Book> books = new ArrayList<>();
     private double totalPrice;
-    LocalDateTime openingTimestamp;
-    LocalDateTime closingTimestamp;
+    private LocalDateTime openingTimestamp;
+    private LocalDateTime closingTimestamp;
     private OrderStatus status;
 
     public Order(int orderId) {
@@ -71,7 +72,8 @@ public class Order {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Order details:\n");
-        sb.append("Total price: ").append(totalPrice).append("\n");
+        DecimalFormat df = new DecimalFormat("#.##");
+        sb.append("Total price: ").append(df.format(totalPrice)).append("\n");
         for (Book book : books) {
             sb.append("Book: ").append(book.getTitle()).append(", Price: ").append(book.getPrice()).append("\n");
         }

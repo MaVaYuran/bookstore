@@ -40,9 +40,9 @@ public class BookStore {
         }
     }
 
-    public Book getAnyBook(List<Book> books) {
+    public Book getAnyBook() {
         Random random = new Random();
-        int bookId = random.nextInt(books.size() - 1);
+        int bookId = random.nextInt(storeBooks.size() - 1);
         return storeBooks.get(bookId);
     }
 
@@ -80,7 +80,7 @@ public class BookStore {
         Scanner scanner = new Scanner(System.in);
         int orderSize = scanner.nextInt();
         for (int i = 0; i < orderSize; i++) {
-            newOrder.addBook(getAnyBook(storeBooks));
+            newOrder.addBook(getAnyBook());
         }
     }
 
