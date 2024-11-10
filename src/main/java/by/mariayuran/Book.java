@@ -1,10 +1,12 @@
 package by.mariayuran;
 
+import java.math.BigDecimal;
+
 public class Book {
     private String title;
-    private double price;
+    private BigDecimal price;
 
-    public Book(String title, double price) {
+    public Book(String title, BigDecimal price) {
         this.title = title;
         this.price = price;
     }
@@ -13,7 +15,7 @@ public class Book {
         return title;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 

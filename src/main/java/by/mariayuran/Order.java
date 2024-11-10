@@ -1,6 +1,6 @@
 package by.mariayuran;
 
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ public class Order {
 
     private int orderId;
     private List<Book> books = new ArrayList<>();
-    private double totalPrice;
+    private BigDecimal totalPrice = new BigDecimal("0.00");
     private LocalDateTime openingTimestamp;
     private LocalDateTime closingTimestamp;
     private OrderStatus status;
@@ -28,7 +28,7 @@ public class Order {
         return books;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
@@ -51,7 +51,7 @@ public class Order {
     public void addBook(Book book) {
         if (this.getStatus() == OrderStatus.OPEN) {
             books.add(book);
-            totalPrice += book.getPrice();
+            totalPrice = totalPrice.add(book.getPrice());
         }
     }
 
@@ -59,6 +59,7 @@ public class Order {
         if (status == OrderStatus.OPEN) {
             this.setStatus(OrderStatus.CANCELLED);
             this.closingTimestamp = LocalDateTime.now();
+
         }
     }
 
@@ -69,11 +70,11 @@ public class Order {
         }
 
     }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Order details:\n");
-        DecimalFormat df = new DecimalFormat("#.##");
-        sb.append("Total price: ").append(df.format(totalPrice)).append("\n");
+        sb.append("Total price: ").append(totalPrice).append("\n");
         for (Book book : books) {
             sb.append("Book: ").append(book.getTitle()).append(", Price: ").append(book.getPrice()).append("\n");
         }

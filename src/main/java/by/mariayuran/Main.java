@@ -20,6 +20,7 @@ public class Main {
         System.out.println("```````````````````````````````````````````````````````````````");
         for (Order o : orders) {
             System.out.println(o.getStatus());
+
         }
     }
 }
