@@ -6,25 +6,27 @@ import java.util.*;
 public class BookStore {
     private final List<Order> orders;
     private final List<Book> storeBooks;
+    private Scanner scanner;
 
-    public BookStore(List<Order> orders) {
-        this.orders = orders;
+    public BookStore() {
+        this.orders = new ArrayList<>();
         this.storeBooks = storeLibrary();
-        System.out.println(storeBooks);
+
+    }
+
+    public List<Book> getStoreBooks() {
+        return storeBooks;
     }
 
     public List<Order> getOrders() {
         return orders;
     }
-
-
     public Order createOrder() {
         Order newOrder = new Order(orders.size() + 1);
-        createOrderList(newOrder);
+        newOrder.addBookToOrder(storeBooks);
         orders.add(newOrder);
         return newOrder;
     }
-
 
     public void cancelOrder(int orderId) {
         Order order = findOrder(orderId);
@@ -32,8 +34,6 @@ public class BookStore {
             order.makeOrderCancelled();
         }
     }
-
-
     public void completeOrder(int orderId) {
         Order order = findOrder(orderId);
         if (order != null) {
@@ -41,11 +41,6 @@ public class BookStore {
         }
     }
 
-    public Book getAnyBook() {
-        Random random = new Random();
-        int bookId = random.nextInt(storeBooks.size() - 1);
-        return storeBooks.get(bookId);
-    }
 
     private Order findOrder(int orderId) {
         for (Order order : orders) {
@@ -77,13 +72,6 @@ public class BookStore {
         }
     }
 
-    private void createOrderList(Order newOrder) {
-        Scanner scanner = new Scanner(System.in);
-        int orderSize = scanner.nextInt();
-        for (int i = 0; i < orderSize; i++) {
-            newOrder.addBook(getAnyBook());
-        }
-    }
 
     private static List<Book> storeLibrary() {
         List<Book> storeBooks = new ArrayList<>();

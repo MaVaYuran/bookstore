@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Order {
 
@@ -13,6 +15,7 @@ public class Order {
     private LocalDateTime openingTimestamp;
     private LocalDateTime closingTimestamp;
     private OrderStatus status;
+
 
     public Order(int orderId) {
         this.orderId = orderId;
@@ -70,7 +73,19 @@ public class Order {
         }
 
     }
+    public void addBookToOrder(List<Book> books) {
+      Scanner  scanner = new Scanner(System.in);
+        int orderSize = scanner.nextInt();
+        for (int i = 0; i < orderSize; i++) {
+            this.addBook(getAnyBook(books));
+        }
+    }
 
+    public Book getAnyBook(List<Book> books) {
+        Random random = new Random();
+        int bookId = random.nextInt(books.size() - 1);
+        return books.get(bookId);
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Order details:\n");

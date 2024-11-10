@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        List<Order> orders = new ArrayList<>();
-        BookStore bookStore = new BookStore(orders);
+//        List<Order> orders = new ArrayList<>();
+        BookStore bookStore = new BookStore();
         do {
             System.out.println(bookStore.createOrder());
-        } while (orders.size() != 8);
+        } while (bookStore.getOrders().size() != 8);
 
         System.out.println("```````````````````````````````````````````````````````````````");
         System.out.println("Sorted orders:");
@@ -18,7 +18,7 @@ public class Main {
         bookStore.cancelOrder(3);
         bookStore.completeOrder(5);
         System.out.println("```````````````````````````````````````````````````````````````");
-        for (Order o : orders) {
+        for (Order o : bookStore.getOrders()) {
             System.out.println(o.getStatus());
 
         }

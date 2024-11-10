@@ -1,22 +1,25 @@
 package by.mariayuran;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class OrderTest {
     private Order order;
     private Book book1;
     private Book book2;
+    BookStore bookStore;
+
 
     @BeforeEach
     public void setUp() {
+        bookStore = new BookStore();
         order = new Order(1);
         book1 = new Book("Book one", new BigDecimal("5.99"));
         book2 = new Book("Book two", new BigDecimal("10.99"));
@@ -24,7 +27,7 @@ class OrderTest {
     }
 
     @Test
-    void books_size_when_book_added() {
+    void booksSizeWhenBookAdded() {
         order.addBook(book1);
         order.addBook(book2);
         List<Book> books = order.getBooks();
@@ -33,7 +36,7 @@ class OrderTest {
     }
 
     @Test
-    void books_contains_book_if_book_added() {
+    void booksContainsBookIfBookAdded() {
         order.addBook(book1);
         List<Book> books = order.getBooks();
 
@@ -41,7 +44,7 @@ class OrderTest {
     }
 
     @Test
-    void totalPrice_when_book_added() {
+    void totalPriceWhenBookAdded() {
         order.addBook(book1);
         order.addBook(book2);
 
@@ -49,21 +52,35 @@ class OrderTest {
     }
 
     @Test
-    void orderStatus_and_closingTimestamp_when_order_cancelled() {
+    void orderStatusAndClosingTimestampWhenOrderCancelled() {
         order.makeOrderCancelled();
 
         assertThat(order.getStatus()).isEqualByComparingTo(OrderStatus.CANCELLED);
         assertThat(order.getClosingTimestamp()).isNotNull();
-
-    }
+   }
 
     @Test
-    void orderStatus_and_closingTimestamp_when_order_completed() {
+    void orderStatusAndClosingTimestampWhenOrderCompleted() {
         order.makeOrderCompleted();
 
         assertThat(order.getStatus()).isEqualByComparingTo(OrderStatus.COMPLETED);
         assertThat(order.getClosingTimestamp()).isNotNull();
     }
+
+    @Test
+    void getAnyBookTest() {
+        Book book = order.getAnyBook(bookStore.getStoreBooks());
+        assertNotNull(book);
+    }
+
+    @Test
+    void addBookToOrderTest() {
+        Order order = new Order(1);
+        System.setIn(new ByteArrayInputStream("2".getBytes()));
+        order.addBookToOrder(bookStore.getStoreBooks());
+        assertEquals(2, order.getBooks().size());
+    }
+
 
     @Test
     void testToString() {
