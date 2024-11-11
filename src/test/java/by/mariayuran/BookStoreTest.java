@@ -5,13 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,7 +25,7 @@ public class BookStoreTest {
     }
 
     @Test
-    void createOrderTest() {
+    void createOrder() {
         bookStore.createOrder();
         List<Order> orders = bookStore.getOrders();
         Order order = orders.get(0);
@@ -37,7 +35,7 @@ public class BookStoreTest {
     }
 
     @Test
-    void cancelOrderTest() {
+    void cancelOrder() {
         int id = bookStore.createOrder().getOrderId();
         assertEquals(OrderStatus.OPEN, bookStore.getOrders().get(0).getStatus());
         bookStore.cancelOrder(id);
@@ -46,7 +44,7 @@ public class BookStoreTest {
     }
 
     @Test
-    void completeOrderTest() {
+    void completeOrder() {
         int id = bookStore.createOrder().getOrderId();
         assertEquals(OrderStatus.OPEN, bookStore.getOrders().get(0).getStatus());
         bookStore.cancelOrder(id);
@@ -54,7 +52,7 @@ public class BookStoreTest {
     }
 
     @Test
-    void listSortedOrdersTest() {
+    void listSortedOrders() {
 
         Order order1 = new Order(1);
         order1.addBook(new Book("Horizont", new BigDecimal("2.99")));

@@ -68,13 +68,13 @@ class OrderTest {
     }
 
     @Test
-    void getAnyBookTest() {
+    void getAnyBook() {
         Book book = order.getAnyBook(bookStore.getStoreBooks());
         assertNotNull(book);
     }
 
     @Test
-    void addBookToOrderTest() {
+    void addBookToOrder() {
         Order order = new Order(1);
         System.setIn(new ByteArrayInputStream("2".getBytes()));
         order.addBookToOrder(bookStore.getStoreBooks());

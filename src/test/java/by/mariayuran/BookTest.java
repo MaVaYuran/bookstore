@@ -26,7 +26,7 @@ class BookTest {
 
 
     @Test
-    void testToString() {
+    void ToString() {
         String actualString = book.toString();
         String expectedString = "Book{title='Clean code', price=9.99}";
         assertEquals(expectedString, actualString,

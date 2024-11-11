@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-//        List<Order> orders = new ArrayList<>();
         BookStore bookStore = new BookStore();
         do {
             System.out.println(bookStore.createOrder());
