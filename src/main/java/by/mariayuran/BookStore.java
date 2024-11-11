@@ -1,29 +1,32 @@
 package by.mariayuran;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class BookStore {
     private final List<Order> orders;
     private final List<Book> storeBooks;
+    private Scanner scanner;
 
-    public BookStore(List<Order> orders) {
-        this.orders = orders;
+    public BookStore() {
+        this.orders = new ArrayList<>();
         this.storeBooks = storeLibrary();
-        System.out.println(storeBooks);
+
+    }
+
+    public List<Book> getStoreBooks() {
+        return storeBooks;
     }
 
     public List<Order> getOrders() {
         return orders;
     }
-
-
     public Order createOrder() {
         Order newOrder = new Order(orders.size() + 1);
-        createOrderList(newOrder);
+        newOrder.addBookToOrder(storeBooks);
         orders.add(newOrder);
         return newOrder;
     }
-
 
     public void cancelOrder(int orderId) {
         Order order = findOrder(orderId);
@@ -31,8 +34,6 @@ public class BookStore {
             order.makeOrderCancelled();
         }
     }
-
-
     public void completeOrder(int orderId) {
         Order order = findOrder(orderId);
         if (order != null) {
@@ -40,11 +41,6 @@ public class BookStore {
         }
     }
 
-    public Book getAnyBook() {
-        Random random = new Random();
-        int bookId = random.nextInt(storeBooks.size() - 1);
-        return storeBooks.get(bookId);
-    }
 
     private Order findOrder(int orderId) {
         for (Order order : orders) {
@@ -60,7 +56,7 @@ public class BookStore {
 
         Comparator<Order> comparator = switch (sortBy) {
             case "id" -> Comparator.comparingInt(Order::getOrderId);
-            case "totalPrice" -> Comparator.comparingDouble(Order::getTotalPrice);
+            case "totalPrice" -> Comparator.comparing(Order::getTotalPrice);
             case "openingTimestamp" -> Comparator.comparing(Order::getOpeningTimestamp);
             case "closingTimestamp" -> Comparator.comparing(Order::getClosingTimestamp);
             default -> Comparator.comparing(order -> order.getStatus().name());
@@ -76,33 +72,26 @@ public class BookStore {
         }
     }
 
-    private void createOrderList(Order newOrder) {
-        Scanner scanner = new Scanner(System.in);
-        int orderSize = scanner.nextInt();
-        for (int i = 0; i < orderSize; i++) {
-            newOrder.addBook(getAnyBook());
-        }
-    }
 
     private static List<Book> storeLibrary() {
         List<Book> storeBooks = new ArrayList<>();
-        storeBooks.add(new Book("The Lord of rings", 29.95));
-        storeBooks.add(new Book("Hobbit", 19.95));
-        storeBooks.add(new Book("Незнайка", 11.95));
-        storeBooks.add(new Book("Мышонок пик", 7.55));
-        storeBooks.add(new Book("Learn Java", 22.95));
-        storeBooks.add(new Book("Harry Potter and the Philosopher's stone", 15.99));
-        storeBooks.add(new Book("Harry Potter and the Chamber of Secrets", 15.99));
-        storeBooks.add(new Book("Harry Potter and the Prisoner of Azkaban", 15.99));
-        storeBooks.add(new Book("Harry Potter and the Order of the Phoenix", 15.99));
-        storeBooks.add(new Book("Harry Potter and the Deathly Hallows", 15.99));
-        storeBooks.add(new Book("The Twilight", 30.95));
-        storeBooks.add(new Book("50 Shades of gray", 38.49));
-        storeBooks.add(new Book("Romeo & Juliette", 11.85));
-        storeBooks.add(new Book("Don KiHot", 14.95));
-        storeBooks.add(new Book("The Alchemist", 6.95));
-        storeBooks.add(new Book("Brida", 19.95));
-        storeBooks.add(new Book("The witch of Portobello", 19.95));
+        storeBooks.add(new Book("The Lord of rings", new BigDecimal("22.55")));
+        storeBooks.add(new Book("Hobbit", new BigDecimal("19.95")));
+        storeBooks.add(new Book("Незнайка", new BigDecimal("11.95")));
+        storeBooks.add(new Book("Мышонок пик", new BigDecimal("7.55")));
+        storeBooks.add(new Book("Learn Java", new BigDecimal("22.95")));
+        storeBooks.add(new Book("Harry Potter and the Philosopher's stone", new BigDecimal("15.99")));
+        storeBooks.add(new Book("Harry Potter and the Chamber of Secrets", new BigDecimal("15.99")));
+        storeBooks.add(new Book("Harry Potter and the Prisoner of Azkaban", new BigDecimal("15.99")));
+        storeBooks.add(new Book("Harry Potter and the Order of the Phoenix", new BigDecimal("15.99")));
+        storeBooks.add(new Book("Harry Potter and the Deathly Hallows",  new BigDecimal("15.99")));
+        storeBooks.add(new Book("The Twilight",  new BigDecimal("30.95")));
+        storeBooks.add(new Book("50 Shades of gray",  new BigDecimal("38.49")));
+        storeBooks.add(new Book("Romeo & Juliette",  new BigDecimal("11.89")));
+        storeBooks.add(new Book("Don KiHot",  new BigDecimal("14.55")));
+        storeBooks.add(new Book("The Alchemist",  new BigDecimal("6.95")));
+        storeBooks.add(new Book("Frida",  new BigDecimal("19.95")));
+        storeBooks.add(new Book("The witch of Portobello",  new BigDecimal("19.95")));
         return storeBooks;
     }
 }

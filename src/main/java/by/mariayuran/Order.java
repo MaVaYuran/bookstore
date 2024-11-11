@@ -1,18 +1,21 @@
 package by.mariayuran;
 
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Order {
 
     private int orderId;
     private List<Book> books = new ArrayList<>();
-    private double totalPrice;
+    private BigDecimal totalPrice = new BigDecimal("0.00");
     private LocalDateTime openingTimestamp;
     private LocalDateTime closingTimestamp;
     private OrderStatus status;
+
 
     public Order(int orderId) {
         this.orderId = orderId;
@@ -28,7 +31,7 @@ public class Order {
         return books;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
@@ -51,7 +54,7 @@ public class Order {
     public void addBook(Book book) {
         if (this.getStatus() == OrderStatus.OPEN) {
             books.add(book);
-            totalPrice += book.getPrice();
+            totalPrice = totalPrice.add(book.getPrice());
         }
     }
 
@@ -59,6 +62,7 @@ public class Order {
         if (status == OrderStatus.OPEN) {
             this.setStatus(OrderStatus.CANCELLED);
             this.closingTimestamp = LocalDateTime.now();
+
         }
     }
 
@@ -69,11 +73,23 @@ public class Order {
         }
 
     }
+    public void addBookToOrder(List<Book> books) {
+      Scanner  scanner = new Scanner(System.in);
+        int orderSize = scanner.nextInt();
+        for (int i = 0; i < orderSize; i++) {
+            this.addBook(getAnyBook(books));
+        }
+    }
+
+    public Book getAnyBook(List<Book> books) {
+        Random random = new Random();
+        int bookId = random.nextInt(books.size() - 1);
+        return books.get(bookId);
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Order details:\n");
-        DecimalFormat df = new DecimalFormat("#.##");
-        sb.append("Total price: ").append(df.format(totalPrice)).append("\n");
+        sb.append("Total price: ").append(totalPrice).append("\n");
         for (Book book : books) {
             sb.append("Book: ").append(book.getTitle()).append(", Price: ").append(book.getPrice()).append("\n");
         }
