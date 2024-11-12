@@ -1,8 +1,5 @@
 package by.mariayuran;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
         BookStore bookStore = new BookStore();
@@ -12,7 +9,7 @@ public class Main {
 
         System.out.println("```````````````````````````````````````````````````````````````");
         System.out.println("Sorted orders:");
-        bookStore.listSortedOrders(0, 3, "totalPrice");
+        bookStore.listSortedOrders(0, 3, "to1talPrice");
 
         bookStore.cancelOrder(3);
         bookStore.completeOrder(5);
