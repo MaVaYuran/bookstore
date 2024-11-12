@@ -1,5 +1,9 @@
 package by.mariayuran;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,11 +21,14 @@ public class Order {
     private LocalDateTime closingTimestamp;
     private OrderStatus status;
 
+    public Order() {
+    }
 
     public Order(int orderId) {
         this.orderId = orderId;
         this.openingTimestamp = LocalDateTime.now();
         status = OrderStatus.OPEN;
+
     }
 
     public int getOrderId() {
@@ -42,6 +49,26 @@ public class Order {
 
     public LocalDateTime getClosingTimestamp() {
         return closingTimestamp;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setOpeningTimestamp(LocalDateTime openingTimestamp) {
+        this.openingTimestamp = openingTimestamp;
+    }
+
+    public void setClosingTimestamp(LocalDateTime closingTimestamp) {
+        this.closingTimestamp = closingTimestamp;
     }
 
     public OrderStatus getStatus() {
@@ -75,18 +102,31 @@ public class Order {
 
     }
 
-    public void addBookToOrder(List<Book> books) {
+    public void addBookToOrder(List<Book> lib) {
         Scanner scanner = new Scanner(System.in);
         int orderSize = scanner.nextInt();
         IntStream.range(0, orderSize)
-                .forEach(i -> this.addBook(getAnyBook(books)));
+                .forEach(i -> this.addBook(getAnyBook(lib)));
 
     }
 
-    public Book getAnyBook(List<Book> books) {
+    public Book getAnyBook(List<Book> lib) {
         Random random = new Random();
-        int bookId = random.nextInt(books.size() - 1);
-        return books.get(bookId);
+        int bookId = random.nextInt(lib.size() - 1);
+        return lib.get(bookId);
+    }
+
+     static void writeOrderToJson(List<Order> orders){
+      String filePath = "src/main/resources/orders.json";
+        ObjectMapper om = new ObjectMapper();
+        om.registerModule(new JavaTimeModule());
+        try {
+            om.writeValue(new File(filePath), orders);
+            System.out.println("Orders were written to " + filePath);
+        }catch (IOException e) {
+            System.out.println("Orders weren't written to json");
+            e.printStackTrace();
+        }
     }
 
     @Override

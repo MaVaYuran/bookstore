@@ -14,6 +14,8 @@ public class Main {
 
         bookStore.cancelOrder(3);
         bookStore.completeOrder(5);
+
+        Order.writeOrderToJson(bookStore.getOrders());
         System.out.println("```````````````````````````````````````````````````````````````");
         for (Order o : bookStore.getOrders()) {
             System.out.println(o.getStatus());
