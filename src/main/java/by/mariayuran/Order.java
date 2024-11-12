@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Order {
 
@@ -73,12 +74,13 @@ public class Order {
         }
 
     }
+
     public void addBookToOrder(List<Book> books) {
-      Scanner  scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         int orderSize = scanner.nextInt();
-        for (int i = 0; i < orderSize; i++) {
-            this.addBook(getAnyBook(books));
-        }
+        IntStream.range(0, orderSize)
+                .forEach(i -> this.addBook(getAnyBook(books)));
+
     }
 
     public Book getAnyBook(List<Book> books) {
@@ -86,6 +88,7 @@ public class Order {
         int bookId = random.nextInt(books.size() - 1);
         return books.get(bookId);
     }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Order details:\n");

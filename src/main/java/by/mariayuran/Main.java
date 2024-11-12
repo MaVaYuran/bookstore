@@ -3,6 +3,7 @@ package by.mariayuran;
 public class Main {
     public static void main(String[] args) {
         BookStore bookStore = new BookStore();
+
         do {
             System.out.println(bookStore.createOrder());
         } while (bookStore.getOrders().size() != 8);
