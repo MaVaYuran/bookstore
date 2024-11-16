@@ -2,6 +2,7 @@ package by.mariayuran;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -9,6 +10,7 @@ import java.util.*;
 public class BookStore {
     private final List<Order> orders;
     private final List<Book> storeBooks;
+    ObjectMapper objectMapper;
 
     public BookStore() {
         this.orders = new ArrayList<>();
@@ -78,8 +80,8 @@ public class BookStore {
     }
 
 
-    private static List<Book> storeLibrary() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+     List<Book> storeLibrary() throws IOException {
+        objectMapper = new ObjectMapper();
         return objectMapper.readValue(new File("src/main/resources/library.json"),
                 new TypeReference<List<Book>>() {
                 });

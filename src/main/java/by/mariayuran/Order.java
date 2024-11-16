@@ -2,6 +2,7 @@ package by.mariayuran;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -116,14 +117,14 @@ public class Order {
         return lib.get(bookId);
     }
 
-     static void writeOrderToJson(List<Order> orders){
-      String filePath = "src/main/resources/orders.json";
-        ObjectMapper om = new ObjectMapper();
-        om.registerModule(new JavaTimeModule());
+    static void writeOrderToJson(List<Order> orders, ObjectMapper objectMapper) {
+        String filePath = "src/main/resources/orders.json";
+        objectMapper= new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
         try {
-            om.writeValue(new File(filePath), orders);
+            objectMapper.writeValue(new File(filePath), orders);
             System.out.println("Orders were written to " + filePath);
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Orders weren't written to json");
             e.printStackTrace();
         }

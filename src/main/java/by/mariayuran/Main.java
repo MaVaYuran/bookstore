@@ -1,8 +1,11 @@
 package by.mariayuran;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Main {
     public static void main(String[] args) {
         BookStore bookStore = new BookStore();
+        ObjectMapper objectMapper = null;
 
         do {
             System.out.println(bookStore.createOrder());
@@ -15,7 +18,7 @@ public class Main {
         bookStore.cancelOrder(3);
         bookStore.completeOrder(5);
 
-        Order.writeOrderToJson(bookStore.getOrders());
+        Order.writeOrderToJson(bookStore.getOrders(), objectMapper);
         System.out.println("```````````````````````````````````````````````````````````````");
         for (Order o : bookStore.getOrders()) {
             System.out.println(o.getStatus());

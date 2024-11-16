@@ -1,14 +1,22 @@
 package by.mariayuran;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
+
+import static by.mariayuran.Order.writeOrderToJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.verify;
 
 class OrderTest {
     private Order order;
@@ -92,5 +100,14 @@ class OrderTest {
                           "Book: Book two, Price: 10.99\n";
 
         assertThat(order.toString()).isEqualTo(expected);
+    }
+
+    @Test
+    void writeOrderToJsonT() throws IOException {
+        List<Order> orders = Collections.singletonList(new Order(1));
+        ObjectMapper mockObjectMapper = Mockito.mock(ObjectMapper.class);
+
+        writeOrderToJson(orders, mockObjectMapper);
+        verify(mockObjectMapper).writeValue(new File("src/main/resources/orders.json"), orders);
     }
 }
