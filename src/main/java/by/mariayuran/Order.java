@@ -22,6 +22,7 @@ public class Order {
     private LocalDateTime closingTimestamp;
     private OrderStatus status;
 
+
     public Order() {
     }
 
@@ -113,22 +114,22 @@ public class Order {
 
     public Book getAnyBook(List<Book> lib) {
         Random random = new Random();
-        int bookId = random.nextInt(lib.size() - 1);
+        int bookId = random.nextInt(lib.size());
         return lib.get(bookId);
     }
 
-    static void writeOrderToJson(List<Order> orders, ObjectMapper objectMapper) {
-        String filePath = "src/main/resources/orders.json";
-        objectMapper= new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        try {
-            objectMapper.writeValue(new File(filePath), orders);
-            System.out.println("Orders were written to " + filePath);
-        } catch (IOException e) {
-            System.out.println("Orders weren't written to json");
-            e.printStackTrace();
-        }
-    }
+//    static void writeOrderToJson(List<Order> orders, ObjectMapper objectMapper) {
+//        String filePath = "src/main/resources/orders.json";
+//        objectMapper = new ObjectMapper();
+//        objectMapper.registerModule(new JavaTimeModule());
+//        try {
+//            objectMapper.writeValue(new File(filePath), orders);
+//            System.out.println("Orders were written to " + filePath);
+//        } catch (IOException e) {
+//            System.out.println("Orders weren't written to json");
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public String toString() {

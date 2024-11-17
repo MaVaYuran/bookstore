@@ -1,36 +1,37 @@
 package by.mariayuran;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import by.mariayuran.library.LibraryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class BookStoreTest {
     @InjectMocks
     BookStore bookStore;
+    @Mock
+    LibraryRepository libraryRepository;
 
     @BeforeEach
     void setUp() {
-
        System.setIn(new ByteArrayInputStream("2".getBytes()));
 
     }
 
     @Test
     void createOrder() {
+        when(libraryRepository.loadLibrary()).thenReturn(List.of(new Book("Book1", new BigDecimal("2")),
+                        new Book("Book2", new BigDecimal("3"))));
         bookStore.createOrder();
         List<Order> orders = bookStore.getOrders();
         Order order = orders.get(0);
@@ -41,6 +42,8 @@ public class BookStoreTest {
 
     @Test
     void cancelOrder() {
+        when(libraryRepository.loadLibrary()).thenReturn(List.of(new Book("Book1", new BigDecimal("2")),
+                new Book("Book2", new BigDecimal("3"))));
         int id = bookStore.createOrder().getOrderId();
         assertEquals(OrderStatus.OPEN, bookStore.getOrders().get(0).getStatus());
         bookStore.cancelOrder(id);
@@ -50,6 +53,8 @@ public class BookStoreTest {
 
     @Test
     void completeOrder() {
+        when(libraryRepository.loadLibrary()).thenReturn(List.of(new Book("Book1", new BigDecimal("2")),
+                new Book("Book2", new BigDecimal("3"))));
         int id = bookStore.createOrder().getOrderId();
         assertEquals(OrderStatus.OPEN, bookStore.getOrders().get(0).getStatus());
         bookStore.cancelOrder(id);
@@ -85,20 +90,4 @@ public class BookStoreTest {
         assertEquals(expectedOutput.trim(), outContent.toString().trim());
 
     }
-
-    @Test
-    void storeLibraryReturnExpectedBook() throws IOException {
-
-        ObjectMapper mockObjectMapper = Mockito.mock(ObjectMapper.class);
-        List<Book> expectedBook = Collections.singletonList(any());
-        when(mockObjectMapper.readValue(new File("src/main/resources/libraryTest.json"), new TypeReference<List<Book>>() {}))
-                .thenReturn(any());
-        List<Book> actualBook = bookStore.storeLibrary();
-
-        assertEquals(expectedBook, actualBook);
-
-    }
-
-
-
 }

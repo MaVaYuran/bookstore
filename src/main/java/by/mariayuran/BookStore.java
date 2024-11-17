@@ -1,30 +1,17 @@
 package by.mariayuran;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.File;
-import java.io.IOException;
+import by.mariayuran.library.LibraryRepository;
 import java.util.*;
 
 public class BookStore {
     private final List<Order> orders;
-    private final List<Book> storeBooks;
-    ObjectMapper objectMapper;
+    private final LibraryRepository libraryRepository;
 
-    public BookStore() {
+    public BookStore(LibraryRepository libraryRepository) {
         this.orders = new ArrayList<>();
-        try {
-            this.storeBooks = storeLibrary();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        this.libraryRepository = libraryRepository;
     }
 
-    public List<Book> getStoreBooks() {
-        return storeBooks;
-    }
 
     public List<Order> getOrders() {
         return orders;
@@ -32,7 +19,7 @@ public class BookStore {
 
     public Order createOrder() {
         Order newOrder = new Order(orders.size() + 1);
-        newOrder.addBookToOrder(storeBooks);
+        newOrder.addBookToOrder(libraryRepository.loadLibrary());
         orders.add(newOrder);
         return newOrder;
     }
@@ -76,15 +63,6 @@ public class BookStore {
 
         sortedOrders.subList(startIndex, endIndex)
                 .forEach(System.out::println);
-
-    }
-
-
-     List<Book> storeLibrary() throws IOException {
-        objectMapper = new ObjectMapper();
-        return objectMapper.readValue(new File("src/main/resources/library.json"),
-                new TypeReference<List<Book>>() {
-                });
 
     }
 }

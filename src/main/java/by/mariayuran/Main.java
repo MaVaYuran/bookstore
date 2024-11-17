@@ -1,11 +1,15 @@
 package by.mariayuran;
 
+import by.mariayuran.library.LibraryRepository;
+import by.mariayuran.library.LibraryRepositoryImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Main {
     public static void main(String[] args) {
-        BookStore bookStore = new BookStore();
-        ObjectMapper objectMapper = null;
+         LibraryRepository libraryRepository = new LibraryRepositoryImpl("library.json");
+        BookStore bookStore = new BookStore(libraryRepository);
+//        ObjectMapper objectMapper = null;
+
 
         do {
             System.out.println(bookStore.createOrder());
@@ -13,12 +17,12 @@ public class Main {
 
         System.out.println("```````````````````````````````````````````````````````````````");
         System.out.println("Sorted orders:");
-        bookStore.listSortedOrders(0, 3, "to1talPrice");
+        bookStore.listSortedOrders(0, 3, "totalPrice");
 
         bookStore.cancelOrder(3);
         bookStore.completeOrder(5);
 
-        Order.writeOrderToJson(bookStore.getOrders(), objectMapper);
+        libraryRepository.writeOrderToJson(bookStore.getOrders());
         System.out.println("```````````````````````````````````````````````````````````````");
         for (Order o : bookStore.getOrders()) {
             System.out.println(o.getStatus());

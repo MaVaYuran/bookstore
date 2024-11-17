@@ -1,0 +1,72 @@
+ [
+    {
+      "title": "The Lord of rings",
+      "price": 22.55
+    },
+    {
+      "title": "Hobbit",
+      "price": 19.95
+    },
+    {
+      "title": "Незнайка",
+      "price": 3.75
+    },
+    {
+      "title": "Мышонок пик",
+      "price": 1.49
+    },
+    {
+      "title": "Learn Java",
+      "price": 22.99
+    },
+    {
+      "title": "Harry Potter and the Philosopher's stone",
+      "price": 15.99
+    },
+    {
+      "title": "Harry Potter and the Chamber of Secrets",
+      "price":15.99
+    },
+    {
+      "title": "Harry Potter and the Prisoner of Azkaban",
+      "price": 15.99
+    },
+    {
+      "title": "Harry Potter and the Order of the Phoenix",
+      "price": 15.99
+    },
+    {
+      "title": "Harry Potter and the Deathly Hallows",
+      "price": 15.99
+    },
+    {
+      "title": "The Twilight",
+      "price": 30.55
+    },
+    {
+      "title": "50 Shades of gray",
+      "price": 38.98
+    },
+    {
+      "title": "Frida",
+      "price": 9.90
+    },
+    {
+      "title": "Romeo & Juliette",
+      "price": 11.89
+    },
+    {
+      "title": "Don KiHot",
+      "price": 14.55
+    },
+    {
+      "title": "The Alchemist",
+      "price": 6.95
+    },
+    {
+      "title": "The witch of Portobello",
+      "price": 9.90
+    }
+  ]
+
+
