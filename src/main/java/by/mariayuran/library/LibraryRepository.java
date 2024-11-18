@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface LibraryRepository {
     List<Book> loadLibrary();
-   void writeOrderToJson(List<Order> orders);
+
+    void writeOrderToJson(List<Order> orders);
 }

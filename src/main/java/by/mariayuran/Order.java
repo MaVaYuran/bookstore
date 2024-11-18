@@ -1,10 +1,5 @@
 package by.mariayuran;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -118,18 +113,6 @@ public class Order {
         return lib.get(bookId);
     }
 
-//    static void writeOrderToJson(List<Order> orders, ObjectMapper objectMapper) {
-//        String filePath = "src/main/resources/orders.json";
-//        objectMapper = new ObjectMapper();
-//        objectMapper.registerModule(new JavaTimeModule());
-//        try {
-//            objectMapper.writeValue(new File(filePath), orders);
-//            System.out.println("Orders were written to " + filePath);
-//        } catch (IOException e) {
-//            System.out.println("Orders weren't written to json");
-//            e.printStackTrace();
-//        }
-//    }
 
     @Override
     public String toString() {
