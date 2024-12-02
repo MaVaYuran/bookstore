@@ -1,11 +1,15 @@
 package by.mariayuran;
 
+import by.mariayuran.library.LibraryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -14,12 +18,17 @@ class OrderTest {
     private Order order;
     private Book book1;
     private Book book2;
+    @InjectMocks
     BookStore bookStore;
+    @Mock
+    LibraryRepository libraryRepository;
+
+
 
 
     @BeforeEach
     public void setUp() {
-        bookStore = new BookStore();
+//        bookStore = new BookStore(libraryRepository);
         order = new Order(1);
         book1 = new Book("Book one", new BigDecimal("5.99"));
         book2 = new Book("Book two", new BigDecimal("10.99"));
@@ -69,7 +78,7 @@ class OrderTest {
 
     @Test
     void getAnyBook() {
-        Book book = order.getAnyBook(bookStore.getStoreBooks());
+        Book book = order.getAnyBook(libraryRepository.loadLibrary());
         assertNotNull(book);
     }
 
@@ -77,7 +86,7 @@ class OrderTest {
     void addBookToOrder() {
         Order order = new Order(1);
         System.setIn(new ByteArrayInputStream("2".getBytes()));
-        order.addBookToOrder(bookStore.getStoreBooks());
+        order.addBookToOrder(libraryRepository.loadLibrary());
         assertEquals(2, order.getBooks().size());
     }
 
@@ -93,4 +102,5 @@ class OrderTest {
 
         assertThat(order.toString()).isEqualTo(expected);
     }
+
 }

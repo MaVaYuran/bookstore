@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Order {
 
@@ -17,10 +18,14 @@ public class Order {
     private OrderStatus status;
 
 
+    public Order() {
+    }
+
     public Order(int orderId) {
         this.orderId = orderId;
         this.openingTimestamp = LocalDateTime.now();
         status = OrderStatus.OPEN;
+
     }
 
     public int getOrderId() {
@@ -41,6 +46,26 @@ public class Order {
 
     public LocalDateTime getClosingTimestamp() {
         return closingTimestamp;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setOpeningTimestamp(LocalDateTime openingTimestamp) {
+        this.openingTimestamp = openingTimestamp;
+    }
+
+    public void setClosingTimestamp(LocalDateTime closingTimestamp) {
+        this.closingTimestamp = closingTimestamp;
     }
 
     public OrderStatus getStatus() {
@@ -73,19 +98,22 @@ public class Order {
         }
 
     }
-    public void addBookToOrder(List<Book> books) {
-      Scanner  scanner = new Scanner(System.in);
+
+    public void addBookToOrder(List<Book> lib) {
+        Scanner scanner = new Scanner(System.in);
         int orderSize = scanner.nextInt();
-        for (int i = 0; i < orderSize; i++) {
-            this.addBook(getAnyBook(books));
-        }
+        IntStream.range(0, orderSize)
+                .forEach(i -> this.addBook(getAnyBook(lib)));
+
     }
 
-    public Book getAnyBook(List<Book> books) {
+    public Book getAnyBook(List<Book> lib) {
         Random random = new Random();
-        int bookId = random.nextInt(books.size() - 1);
-        return books.get(bookId);
+        int bookId = random.nextInt(lib.size());
+        return lib.get(bookId);
     }
+
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Order details:\n");
